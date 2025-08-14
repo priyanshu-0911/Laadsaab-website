@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laad Saab - Divine's Ethnic Wear</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-transition-overlay"></div>
+
+    <!-- SVG Definition for the Laad Saab Logo Animation -->
+    <svg width="0" height="0" style="position:absolute; z-index: -1;">
+        <defs>
+            <symbol id="laad-saab-logo-symbol" viewBox="0 0 100 100">
+                <path d="M35.5,30 C30,15 45,15 50,25 C55,15 70,15 64.5,30 C75,40 75,60 64.5,70 C70,85 55,85 50,75 C45,85 30,85 35.5,70 C25,60 25,40 35.5,30 Z M50,42.5 A7.5,7.5 0 1,0 50,57.5 A7.5,7.5 0 1,0 50,42.5 Z"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- ======================= "Divine Weave" Loader ======================= -->
+    <div class="loader" id="loader">
+        <svg class="loader__logo" width="100px" height="100px">
+            <use xlink:href="#laad-saab-logo-symbol"></use>
+        </svg>
+    </div>
+
+    <!-- ======================= Header Component ======================= -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header__content">
+                <a href="#" class="header__logo">Laad Saab</a>
+                
+                <nav class="nav" id="nav-menu">
+                    <ul class="nav__list">
+                        <li><a href="#home" class="nav__link active">Home</a></li>
+                        <li><a href="products.html" class="nav__link">Kurtas</a></li>
+                        <li><a href="about.html" class="nav__link">About Us</a></li>
+                        <li><a href="contact.html" class="nav__link">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header__actions">
+                    <button class="action-btn" id="searchBtn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="action-btn" aria-label="Wishlist">
+                        <i class="fas fa-heart"></i>
+                    </button>
+
+                    <div class="header__user-actions" id="user-actions">
+                            <button class="btn login-btn" id="login-btn">Login</button>
+                            <div class="user-profile" id="user-profile" style="display: none;">
+                                <img id="user-avatar" src="" alt="User Avatar">
+                            </div>
+                        </div>
+                    <button class="action-btn" id="cart-button" aria-label="Shopping Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cart-count">0</span>
+                    </button>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open Menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+       <!-- ======================= Search Palette ======================= -->
+    <div class="search-palette" id="search-palette">
+        <div class="search-palette__content">
+            <div class="search-palette__input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Search for Anarkali, Festive Wear...">
+            </div>
+            <div class="search-results" id="search-results">
+                <!-- Live search results will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================= Mobile Navigation Menu ======================= -->
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav__header">
+            <h3 class="mobile-nav__title">Menu</h3>
+            <button class="close-btn" id="mobile-nav-close" aria-label="Close Menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="mobile-nav__list">
+            <li><a href="#home" class="mobile-nav__link">Home</a></li>
+            <li><a href="products.html" class="mobile-nav__link">Kurtas</a></li>
+            <li><a href="about.html" class="mobile-nav__link">About Us</a></li>
+            <li><a href="contact.html" class="mobile-nav__link">Contact</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- ======================= Hero Section ======================= -->
+        <section class="hero" id="home">
+            <div class="hero__background">
+                <img src="https://images.unsplash.com/photo-1583743814966-8936f37f4678?w=1800&h=2400&fit=crop" alt="Model wearing a classic white kurta" class="hero__background-image">
+            </div>
+            <div class="container">
+                <div class="hero__content">
+                    <h1 class="hero__title">Elegance in Every Thread</h1>
+                    <p class="hero__subtitle">Discover our exclusive collection of handcrafted kurtas, where timeless tradition meets modern sophistication.</p>
+                    <a href="#kurtas" class="btn hero__cta">Shop The Collection</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= Featured Products Section ======================= -->
+        <section class="section" id="kurtas">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title">Featured Products</h2>
+                    <p class="section__subtitle">A curated selection of our finest, handcrafted kurtas.</p>
+                </div>
+                <div class="products-grid" id="products-grid">
+                    <!-- Product cards will be dynamically inserted here by JavaScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================= Why Choose Us Section ======================= -->
+        <section class="section why-choose-us" id="about">
+            <div class="container why-choose-us__container">
+                <div class="section__header why-choose-us__header">
+                    <h2 class="section__title">Why Choose KurtaKing?</h2>
+                    <p class="section__subtitle">Experience the difference with our unwavering commitment to quality, craftsmanship, and timeless style.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-card__icon"><i class="fas fa-certificate"></i></div>
+                        <h3 class="feature-card__title">Premium Fabric</h3>
+                        <p class="feature-card__description">Only the most authentic and comfortable fabrics sourced from trusted artisans across India.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card__icon"><i class="fas fa-palette"></i></div>
+                        <h3 class="feature-card__title">Handcrafted Designs</h3>
+                        <p class="feature-card__description">Each piece is meticulously crafted by skilled hands, ensuring a unique and flawless finish.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card__icon"><i class="fas fa-shipping-fast"></i></div>
+                        <h3 class="feature-card__title">Free Shipping</h3>
+                        <p class="feature-card__description">Complimentary shipping on all orders above ₹999, delivered right to your doorstep.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-card__icon"><i class="fas fa-undo-alt"></i></div>
+                        <h3 class="feature-card__title">Easy Returns</h3>
+                        <p class="feature-card__description">A 30-day hassle-free return and exchange policy for your complete peace of mind.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ======================= Footer Component ======================= -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section footer__section--about">
+                    <h3 class="footer__logo">Laad Saab</h3>
+                    <p class="footer__description">Crafting premium men's kurtas with authentic designs and modern comfort since 2015.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__title">Customer Service</h4>
+                    <ul class="footer__links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__title">Policies</h4>
+                    <ul class="footer__links">
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer__section">
+                    <h4 class="footer__title">About</h4>
+                    <ul class="footer__links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Craftsmanship</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2025 Divine's Laad Saab. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ======================= Shopping Cart Component ======================= -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Your Cart</h3>
+            <button class="close-btn" id="close-cart-btn" aria-label="Close Cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-content" id="cart-content">
+            <div class="empty-cart-message">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty.</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">₹0</span>
+            </div>
+            <button class="btn cart-checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div> <!-- ✅ CORRECT: The cart sidebar div closes here -->
+
+    <!-- ======================= Product Detail Modal ======================= -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal" id="product-modal">
+        <!-- Product details will be dynamically inserted here -->
+    </div>
+
+    <!-- ======================= Checkout Modal ======================= -->
+    <div class="modal-overlay" id="checkout-overlay"></div>
+    <div class="modal" id="checkout-modal">
+        <div class="checkout-modal__content">
+            <div class="checkout-modal__header">
+                <h2 class="checkout-modal__title">Checkout</h2>
+                <button class="close-btn" id="close-checkout-btn" aria-label="Close Checkout">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="checkout-modal__body">
+                <div class="checkout-form">
+                    <h3 class="checkout-section-title">Shipping Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" class="form-control" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pincode">Pincode</label>
+                            <input type="text" id="pincode" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout-summary">
+                    <h3 class="checkout-section-title">Order Summary</h3>
+                    <div class="summary-items" id="summary-items">
+                        <!-- Summary items will be injected here -->
+                    </div>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span id="summary-total">₹0</span>
+                    </div>
+                    <button class="btn btn-place-order">Place Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- ======================= Firebase SDKs ======================= -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    
+    <!-- Your Firebase Initialization -->
+    <script src="firebase-init.js"></script>
+
+    <script src="global.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
