@@ -73,8 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fade IN on page load (only if overlay exists)
   if (transitionOverlay) {
     window.addEventListener('load', () => {
-      transitionOverlay.classList.add('fade-out');
-    });
+  transitionOverlay.classList.add('fade-out');
+  // Ensure header is visible on any page load
+  document.body.classList.add('is-loaded');
+  document.body.classList.remove('is-loading');
+});
   }
 
   // Fade OUT on internal link click (only if overlay exists)
@@ -105,3 +108,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+// NUCLEAR SAFETY NET - always show header after 3 seconds
+setTimeout(() => {
+  const header = document.querySelector('.header');
+  if (header) {
+    header.style.opacity = '1';
+    header.style.visibility = 'visible';
+    header.style.pointerEvents = 'auto';
+    header.style.display = 'block';
+    header.style.zIndex = '9500';
+  }
+  document.body.classList.remove('is-loading');
+  document.body.classList.add('is-loaded');
+}, 3000);

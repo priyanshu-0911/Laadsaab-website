@@ -48,16 +48,33 @@ tl.to(swash, { opacity: 1.00, duration: 0.08 }, 1.30);
   tl.to(monoImg,  { filter: 'drop-shadow(0 2px 16px rgba(212,175,55,0.35))', duration: 0.4, ease: 'sine.out' }, '>-0.55');
   tl.to(monoImg,  { filter: 'drop-shadow(0 2px 10px rgba(212,175,55,0.22))', duration: 0.6, ease: 'sine.inOut' }, '>-0.15');
 
-  // Thread retract
-  tl.to(swash, { strokeDashoffset: swashLen * 0.65, duration: 0.35, ease: 'power3.in' }, '>-0.1');
-  tl.to(swash, { opacity: 0, duration: 0.25, ease: 'sine.out' }, '>-0.15');
+ // Thread retract
+tl.to(swash, { strokeDashoffset: swashLen * 0.65, duration: 0.35, ease: 'power3.in' }, '>-0.1');
+tl.to(swash, { opacity: 0, duration: 0.25, ease: 'sine.out' }, '>-0.15');
 
-  // Transition: fade loader, reveal page
-  tl.add(() => {
-    loader.classList.add('is-hidden');
-    document.body.classList.remove('is-loading');
-    document.body.classList.add('is-loaded');
-  }, '>-0.05');
+// NUCLEAR FIX: Force header visible immediately
+tl.add(() => {
+  // Remove loading flag first
+  document.body.classList.remove('is-loading');
+  document.body.classList.add('is-loaded');
+  
+  // Force header visible with direct style override
+  const header = document.querySelector('.header');
+  if (header) {
+    header.style.opacity = '1';
+    header.style.visibility = 'visible';
+    header.style.pointerEvents = 'auto';
+    header.style.display = 'block';
+  }
+}, '>-0.5');
+
+// Hide loader after header is definitely visible
+tl.add(() => {
+  loader.classList.add('is-hidden');
+  loader.style.pointerEvents = 'none';
+  loader.style.zIndex = '-1';
+}, '>+0.2');
+
 
   // Cinematic hero enrich
   if (heroImg) {

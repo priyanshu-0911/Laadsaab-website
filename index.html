@@ -55,6 +55,82 @@
   </div>
 </div>
 <!-- ======================= End Couture Thread Loader ======================= -->
+ <header class="header">
+    <div class="container">
+        <div class="header__content">
+            <!-- Logo -->
+            <a href="#home" class="header__logo">Laad Saab</a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li><a href="#home" class="nav__link active">Home</a></li>
+                    <li><a href="#kurtas" class="nav__link">Kurtas</a></li>
+                    <li><a href="about.html" class="nav__link">About Us</a></li>
+                    <li><a href="contact.html" class="nav__link">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Header Actions -->
+            <div class="header__actions">
+                <!-- Search Button -->
+                <button id="searchBtn" class="action-btn" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                
+                <!-- Cart Button -->
+                <button id="cart-button" class="action-btn" aria-label="Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </button>
+                
+                <!-- Login Button (shown when not logged in) -->
+                <button id="login-btn" class="btn login-btn">Sign In</button>
+                
+                <!-- User Profile (shown when logged in) -->
+                <div id="user-profile" class="user-profile" style="display: none;">
+                    <img id="user-avatar" alt="User Avatar" class="user-avatar">
+                </div>
+                
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-toggle" class="action-btn mobile-menu-toggle" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ======================= End Header ======================= -->
+
+<!-- ======================= Mobile Navigation ======================= -->
+<div class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav__header">
+        <h3 class="mobile-nav__title">Menu</h3>
+        <button id="mobile-nav-close" class="close-btn" aria-label="Close Menu">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <ul class="mobile-nav__list">
+        <li><a href="#home" class="mobile-nav__link">Home</a></li>
+        <li><a href="#kurtas" class="mobile-nav__link">Kurtas</a></li>
+        <li><a href="about.html" class="mobile-nav__link">About Us</a></li>
+        <li><a href="contact.html" class="mobile-nav__link">Contact</a></li>
+    </ul>
+</div>
+<!-- ======================= End Mobile Navigation ======================= -->
+
+<!-- ======================= Search Palette ======================= -->
+<div class="search-palette" id="search-palette">
+    <div class="search-palette__content">
+        <div class="search-palette__input-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" class="search-input" placeholder="Search products...">
+        </div>
+        <div class="search-results" id="search-results">
+            <!-- Search results will appear here -->
+        </div>
+    </div>
+</div>
 
 
     <main>

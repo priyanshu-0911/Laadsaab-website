@@ -38,16 +38,19 @@ body {
 
 /* ======================= Header Component Styles ======================= */
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(26, 26, 26, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
-  z-index: 9500;
-  height: var(--header-height);
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9500 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  display: block !important;
+}
+
+body.is-loading .header {
+  opacity: 0 !important;
 }
 
 .header__content {
@@ -1489,6 +1492,3 @@ body.is-loading footer { opacity: 0; }
 body.is-loaded header,
 body.is-loaded main,
 body.is-loaded footer { opacity: 1; transition: opacity 0.6s ease; }
-
-body.is-loading header { opacity: 0; }
-body.is-loaded  header { opacity: 1; transition: opacity 0.6s ease; }
