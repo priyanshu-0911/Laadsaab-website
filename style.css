@@ -269,7 +269,7 @@ body.is-loading .header {
 }
 
 /* ======================= Product Card Styles ======================= */
-.products-grid {
+.PRODUCTS-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 48px;
@@ -1019,8 +1019,8 @@ body.is-loading .header {
     }
 }
 
-/* ======================= All Products Page Styles ======================= */
-.products-page-layout {
+/* ======================= All PRODUCTS Page Styles ======================= */
+.PRODUCTS-page-layout {
     display: grid;
     grid-template-columns: 280px 1fr; /* Sidebar and main content */
     gap: 48px;

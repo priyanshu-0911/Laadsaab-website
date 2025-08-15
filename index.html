@@ -124,7 +124,7 @@
     <div class="search-palette__content">
         <div class="search-palette__input-wrapper">
             <i class="fas fa-search"></i>
-            <input type="text" id="search-input" class="search-input" placeholder="Search products...">
+            <input type="text" id="search-input" class="search-input" placeholder="Search PRODUCTS...">
         </div>
         <div class="search-results" id="search-results">
             <!-- Search results will appear here -->
@@ -156,7 +156,7 @@
             </p>
             </div>
             <div class="reveal-wrap">
-            <a href="products.html" class="btn hero__cta">Shop The Collection</a>
+            <a href="PRODUCTS.html" class="btn hero__cta">Shop The Collection</a>
             </div>
         </div>
         </div>
@@ -164,14 +164,14 @@
 
         </section>
 
-        <!-- ======================= Featured Products Section ======================= -->
+        <!-- ======================= Featured PRODUCTS Section ======================= -->
         <section class="section" id="kurtas">
             <div class="container">
                 <div class="section__header">
-                    <h2 class="section__title">Featured Products</h2>
+                    <h2 class="section__title">Featured PRODUCTS</h2>
                     <p class="section__subtitle">A curated selection of our finest, handcrafted kurtas.</p>
                 </div>
-                <div class="products-grid" id="products-grid">
+                <div class="PRODUCTS-grid" id="PRODUCTS-grid">
                     <!-- Product cards will be dynamically inserted here by JavaScript -->
                 </div>
             </div>
@@ -345,10 +345,20 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     
-    <!-- Your Firebase Initialization -->
-    <script src="firebase-init.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="global.js"></script>
-    <script src="app.js"></script>
+    <!-- Firebase (keep once) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="firebase-init.js"></script>
+
+<!-- Vendor -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+<!-- App globals (non-module) -->
+<script src="global.js"></script>
+
+<!-- Shared data FIRST, then page logic; both are modules -->
+<script type="module" src="products-data.js"></script>
+<script type="module" src="app.js"></script>
+
 </body>
 </html>

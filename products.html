@@ -21,7 +21,7 @@
                 <nav class="nav" id="nav-menu">
                     <ul class="nav__list">
                         <li><a href="index.html" class="nav__link">Home</a></li>
-                        <li><a href="products.html" class="nav__link active">Kurtas</a></li>
+                        <li><a href="PRODUCTS.html" class="nav__link active">Kurtas</a></li>
                         <li><a href="about.html" class="nav__link">About Us</a></li>
                         <li><a href="contact.html" class="nav__link">Contact</a></li>
                     </ul>
@@ -48,42 +48,42 @@
     </header>
 
     <main>
-        <!-- All Products Section -->
-        <section class="section">
-            <div class="container">
-                <div class="section__header">
-                    <h1 class="section__title">Our Collection</h1>
-                    <p class="section__subtitle">Browse our entire collection of handcrafted kurtas.</p>
-                </div>
-                <div class="products-page-layout">
-                    <!-- Filtering Sidebar -->
+        <!-- Filters Sidebar -->
                     <aside class="filters-sidebar">
-                        <div class="filter-group">
-                            <h3 class="filter-group__title">Category</h3>
-                            <div class="filter-group__options" id="category-filters">
-                                <label><input type="checkbox" name="category" value="classic"> Classic</label>
-                                <label><input type="checkbox" name="category" value="festive"> Festive</label>
-                                <label><input type="checkbox" name="category" value="casual"> Casual</label>
-                            </div>
+                    <div class="filter-group" id="category-filters">
+                        <h4 class="filter-group__title">Category</h4>
+                        <div class="filter-group__options">
+                        <label><input type="radio" name="cat" value="" checked> All</label>
+                        <label><input type="radio" name="cat" value="classic"> Classic</label>
+                        <label><input type="radio" name="cat" value="festive"> Festive</label>
+                        <label><input type="radio" name="cat" value="casual"> Casual</label>
                         </div>
-                        <div class="filter-group">
-                            <h3 class="filter-group__title">Size</h3>
-                            <div class="filter-group__options" id="size-filters">
-                                <label><input type="checkbox" name="size" value="S"> S</label>
-                                <label><input type="checkbox" name="size" value="M"> M</label>
-                                <label><input type="checkbox" name="size" value="L"> L</label>
-                                <label><input type="checkbox" name="size" value="XL"> XL</label>
-                            </div>
+                    </div>
+
+                    <div class="filter-group" id="size-filters">
+                        <h4 class="filter-group__title">Size</h4>
+                        <div class="filter-group__options">
+                        <label><input type="checkbox" value="S"> S</label>
+                        <label><input type="checkbox" value="M"> M</label>
+                        <label><input type="checkbox" value="L"> L</label>
+                        <label><input type="checkbox" value="XL"> XL</label>
+                        <label><input type="checkbox" value="XXL"> XXL</label>
                         </div>
-                        <div class="filter-group">
-                            <h3 class="filter-group__title">Price Range</h3>
-                            <input type="range" id="price-range" min="500" max="5000" value="5000" class="price-slider">
-                            <div class="price-display">Up to <span id="price-value">₹5,000</span></div>
-                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="filter-group__title">Price</h4>
+                        <input type="range" id="price-range" min="1000" max="5000" step="100" value="5000" class="price-slider">
+                        <div class="price-display">Up to <span id="price-value">₹5,000</span></div>
+                    </div>
                     </aside>
+
                     <!-- Products Grid -->
-                    <div class="products-grid" id="all-products-grid">
-                        <!-- All products will be dynamically inserted here -->
+                    <section class="products-grid" id="all-products-grid"></section>
+
+                    <!-- PRODUCTS Grid -->
+                    <div class="PRODUCTS-grid" id="all-PRODUCTS-grid">
+                        <!-- All PRODUCTS will be dynamically inserted here -->
                     </div>
                 </div>
             </div>
@@ -142,11 +142,21 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     
-    <!-- Your Firebase Initialization -->
-    <script src="firebase-init.js"></script>
+    <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="firebase-init.js"></script>
 
-    <script src="global.js"></script>
-    <script src="products.js"></script>
+<!-- Vendor -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+<!-- App globals -->
+<script src="global.js"></script>
+
+<!-- Shared data FIRST, then products-page logic -->
+<script type="module" src="products-data.js"></script>
+<script type="module" src="products.js"></script>
+
 
 </body>
 </html>

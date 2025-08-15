@@ -1,57 +1,99 @@
+// ======================= All Products Page Logic =======================
+import { PRODUCTS } from './products-data.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    const allProducts = [
-        { id: 1, name: "Classic White Kurta", price: 1299, image: "https://images.unsplash.com/photo-1583743814966-8936f37f4678?w=800&h=1200&fit=crop", category: "classic", sizes: ["S", "M", "L"] },
-        { id: 2, name: "Navy Embroidered Kurta", price: 2199, image: "https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=800&h=1200&fit=crop", category: "festive", sizes: ["M", "L", "XL"] },
-        { id: 3, name: "Burgundy Festive Kurta", price: 2899, image: "https://images.unsplash.com/photo-1556935962-7f2e4f0b5e8d?w=800&h=1200&fit=crop", category: "festive", sizes: ["L", "XL"] },
-        { id: 4, name: "Black Printed Kurta", price: 2499, image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=1200&fit=crop", category: "classic", sizes: ["S", "M"] },
-        { id: 5, name: "Cream Linen Kurta", price: 1699, image: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&h=1200&fit=crop", category: "casual", sizes: ["M", "L"] },
-        { id: 6, name: "Forest Green Kurta", price: 2799, image: "https://images.unsplash.com/photo-1566479179817-c7b7b04c9f3b?w=800&h=1200&fit=crop", category: "festive", sizes: ["L", "XL"] },
-    ];
+  const productsGrid   = document.getElementById('all-products-grid');
+  const categoryWrap   = document.getElementById('category-filters');
+  const sizeWrap       = document.getElementById('size-filters');
+  const priceRange     = document.getElementById('price-range');
+  const priceValue     = document.getElementById('price-value');
 
-    const productsGrid = document.getElementById('all-products-grid');
-    const categoryFilters = document.getElementById('category-filters');
-    const sizeFilters = document.getElementById('size-filters');
-    const priceRange = document.getElementById('price-range');
-    const priceValue = document.getElementById('price-value');
+  if (!productsGrid) return;
 
-    function renderProducts(productsToRender) {
-        productsGrid.innerHTML = productsToRender.map(product => `
-            <div class="product-card">
-                <div class="product-card__image-wrapper">
-                    <img src="${product.image}" alt="${product.name}" class="product-card__image">
-                </div>
-                <div class="product-card__content">
-                    <h3 class="product-card__name">${product.name}</h3>
-                    <div class="product-card__price">
-                        <span class="price">₹${product.price.toLocaleString('en-IN')}</span>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-    }
+  const formatINR = (n) => `₹${n.toLocaleString('en-IN')}`;
 
-    function applyFilters() {
-        const selectedCategories = Array.from(categoryFilters.querySelectorAll('input:checked')).map(input => input.value);
-        const selectedSizes = Array.from(sizeFilters.querySelectorAll('input:checked')).map(input => input.value);
-        const maxPrice = parseInt(priceRange.value);
+  function card(p) {
+    return `
+      <article class="product-card" data-product-id="${p.id}">
+        <div class="product-card__image-wrapper">
+          <img src="${p.image}" alt="${p.name}" class="product-card__image">
+          ${p.isNew ? '<div class="product-card__badge">New</div>' : ''}
+        </div>
+        <div class="product-card__content">
+          <h3 class="product-card__name">${p.name}</h3>
+          <div class="product-card__price">
+            <span class="price">${formatINR(p.price)}</span>
+            <span class="price--original">${formatINR(p.originalPrice)}</span>
+          </div>
+          <button class="add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+    `;
+  }
 
-        priceValue.textContent = `₹${maxPrice.toLocaleString('en-IN')}`;
+  function render(list) {
+    productsGrid.innerHTML = list.map(card).join('');
+  }
 
-        let filteredProducts = allProducts.filter(product => {
-            const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
-            const sizeMatch = selectedSizes.length === 0 || product.sizes.some(size => selectedSizes.includes(size));
-            const priceMatch = product.price <= maxPrice;
-            return categoryMatch && sizeMatch && priceMatch;
-        });
+  // Initial render
+  render(PRODUCTS);
 
-        renderProducts(filteredProducts);
-    }
+  // Filter state
+  const state = {
+    category: '',
+    sizes: new Set(),
+    maxPrice: 5000
+  };
 
-    // Event Listeners
-    categoryFilters.addEventListener('change', applyFilters);
-    sizeFilters.addEventListener('change', applyFilters);
-    priceRange.addEventListener('input', applyFilters);
+  // Category (radio)
+  if (categoryWrap) {
+    categoryWrap.addEventListener('change', (e) => {
+      const v = (e.target && e.target.value) || '';
+      state.category = v;
+      apply();
+    });
+  }
 
-    // Initial render
-    renderProducts(allProducts);
+  // Sizes (checkboxes)
+  if (sizeWrap) {
+    sizeWrap.addEventListener('change', (e) => {
+      if (e.target && e.target.type === 'checkbox') {
+        const v = e.target.value;
+        if (e.target.checked) state.sizes.add(v);
+        else state.sizes.delete(v);
+        apply();
+      }
+    });
+  }
+
+  // Price
+  if (priceRange && priceValue) {
+    priceRange.addEventListener('input', () => {
+      state.maxPrice = parseInt(priceRange.value, 10) || 5000;
+      priceValue.textContent = `₹${state.maxPrice.toLocaleString('en-IN')}`;
+      apply();
+    });
+  }
+
+  function apply() {
+    // If multiple sizes selected, keep any product that includes any selected size
+    const list = PRODUCTS.filter(p => {
+      const catOK = !state.category || p.category === state.category;
+      const priceOK = p.price <= state.maxPrice;
+      const sizeOK = state.sizes.size === 0 || p.sizes?.some(s => state.sizes.has(s));
+      return catOK && priceOK && sizeOK;
+    });
+    render(list);
+  }
 });
+export const findProduct = (id) => PRODUCTS.find(p => p.id === id);
+
+export const filterProducts = ({ category = '', size = '', maxPrice = Infinity, query = '' }) => {
+  return PRODUCTS.filter(p => {
+    const catOK   = !category || p.category === category;
+    const sizeOK  = !size || (p.sizes || []).includes(size);
+    const priceOK = p.price <= maxPrice;
+    const queryOK = !query || p.name.toLowerCase().includes(query.toLowerCase());
+    return catOK && sizeOK && priceOK && queryOK;
+  });
+};
