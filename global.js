@@ -1,87 +1,107 @@
 // ======================= Global Site Logic =======================
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // ======================= Global Authentication Logic =======================
-    const loginBtn = document.getElementById('login-btn');
-    const userProfile = document.getElementById('user-profile');
-    const userAvatar = document.getElementById('user-avatar');
+  // ======================= Global Authentication Logic =======================
+  // Safely access Firebase globals if present
+  const hasFirebase = typeof window !== 'undefined'
+                   && typeof window.auth !== 'undefined'
+                   && typeof window.googleProvider !== 'undefined';
 
-    // Function to handle Google Sign-In
-    function signInWithGoogle() {
-        auth.signInWithPopup(googleProvider)
-            .then((result) => {
-                console.log("Signed in successfully!", result.user);
-            })
-            .catch((error) => {
-                console.error("Authentication failed:", error);
-            });
+  const loginBtn     = document.getElementById('login-btn');
+  const userProfile  = document.getElementById('user-profile');
+  const userAvatar   = document.getElementById('user-avatar');
+
+  function signInWithGoogle() {
+    if (!hasFirebase) {
+      console.warn('Auth not available on this page.');
+      return;
     }
+    auth.signInWithPopup(googleProvider)
+      .then((result) => {
+        console.log('Signed in successfully!', result.user);
+      })
+      .catch((error) => {
+        console.error('Authentication failed:', error);
+      });
+  }
 
-    // Function to handle Sign-Out
-    function signOutUser() {
-        auth.signOut()
-            .then(() => {
-                console.log("Signed out successfully.");
-            })
-            .catch((error) => {
-                console.error("Sign out failed:", error);
-            });
+  function signOutUser() {
+    if (!hasFirebase) {
+      console.warn('Auth not available on this page.');
+      return;
     }
+    auth.signOut()
+      .then(() => {
+        console.log('Signed out successfully.');
+      })
+      .catch((error) => {
+        console.error('Sign out failed:', error);
+      });
+  }
 
-    // Listen for changes in authentication state
+  // Listen for changes in authentication state (only if auth exists)
+  if (hasFirebase && typeof auth.onAuthStateChanged === 'function') {
     auth.onAuthStateChanged((user) => {
-        if (user) {
-            // User is signed in
-            loginBtn.style.display = 'none';
-            userProfile.style.display = 'block';
-            userAvatar.src = user.photoURL; // Set avatar image from Google account
-        } else {
-            // User is signed out
-            loginBtn.style.display = 'block';
-            userProfile.style.display = 'none';
-            userAvatar.src = '';
-        }
+      // Safely update UI only if elements exist
+      if (user) {
+        if (loginBtn)    loginBtn.style.display = 'none';
+        if (userProfile) userProfile.style.display = 'block';
+        if (userAvatar)  userAvatar.src = user.photoURL || '';
+      } else {
+        if (loginBtn)    loginBtn.style.display = 'block';
+        if (userProfile) userProfile.style.display = 'none';
+        if (userAvatar)  userAvatar.src = '';
+      }
     });
+  }
 
-    // Add click listeners for login/logout
+  // Add click listeners for login/logout (only if elements exist)
+  if (loginBtn) {
     loginBtn.addEventListener('click', signInWithGoogle);
+  }
+
+  if (userAvatar) {
     userAvatar.addEventListener('click', () => {
-        // Simple confirmation for logout
-        if (confirm("Do you want to sign out?")) {
-            signOutUser();
-        }
+      if (confirm('Do you want to sign out?')) {
+        signOutUser();
+      }
     });
+  }
 
-    // ======================= Global Page Transition Logic =======================
-    const transitionOverlay = document.querySelector('.page-transition-overlay');
+  // ======================= Global Page Transition Logic =======================
+  const transitionOverlay = document.querySelector('.page-transition-overlay');
 
-    // --- Fade IN on page load ---
+  // Fade IN on page load (only if overlay exists)
+  if (transitionOverlay) {
     window.addEventListener('load', () => {
-        if (transitionOverlay) {
-            transitionOverlay.classList.add('fade-out');
+      transitionOverlay.classList.add('fade-out');
+    });
+  }
+
+  // Fade OUT on internal link click (only if overlay exists)
+  if (transitionOverlay) {
+    const allLinks = document.querySelectorAll('a[href]');
+    allLinks.forEach((link) => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+
+        // Ignore empty, hash links, mailto/tel, or absolute URLs
+        if (!href || href.trim() === '' ||
+            href.startsWith('#') ||
+            href.startsWith('mailto:') ||
+            href.startsWith('tel:') ||
+            href.startsWith('http')) {
+          return;
         }
+
+        // It is an internal navigation: animate overlay
+        e.preventDefault();
+        transitionOverlay.classList.remove('fade-out');
+
+        // Navigate after the overlay fades in (match CSS duration)
+        setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+      });
     });
-
-    // --- Fade OUT on link click ---
-    const allLinks = document.querySelectorAll('a');
-
-    allLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-
-            // Check if it's a valid, internal link and not just a scroll link
-            if (href && !href.startsWith('#') && !href.startsWith('http')) {
-                e.preventDefault(); // Stop the browser from navigating instantly
-
-                if (transitionOverlay) {
-                    transitionOverlay.classList.remove('fade-out'); // Make it visible
-                }
-
-                // Wait for the fade animation to finish, then navigate
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 500); // This duration should match the CSS transition time
-            }
-        });
-    });
+  }
 });

@@ -13,105 +13,79 @@
 <body>
     <div class="page-transition-overlay"></div>
 
-    <!-- SVG Definition for the Laad Saab Logo Animation -->
-    <svg width="0" height="0" style="position:absolute; z-index: -1;">
-        <defs>
-            <symbol id="laad-saab-logo-symbol" viewBox="0 0 100 100">
-                <path d="M35.5,30 C30,15 45,15 50,25 C55,15 70,15 64.5,30 C75,40 75,60 64.5,70 C70,85 55,85 50,75 C45,85 30,85 35.5,70 C25,60 25,40 35.5,30 Z M50,42.5 A7.5,7.5 0 1,0 50,57.5 A7.5,7.5 0 1,0 50,42.5 Z"/>
-            </symbol>
-        </defs>
-    </svg>
+<!-- ======================= Couture Thread Loader ======================= -->
+<div id="loader" aria-hidden="true">
+  <div class="cloth-stage">
+    <!-- Optional: cloth texture fallback done in CSS; can also layer an <img> here if you prefer -->
+    <div class="stage-vignette"></div>
+  </div>
 
-    <!-- ======================= "Divine Weave" Loader ======================= -->
-    <div class="loader" id="loader">
-        <svg class="loader__logo" width="100px" height="100px">
-            <use xlink:href="#laad-saab-logo-symbol"></use>
-        </svg>
-    </div>
+  <!-- Gold thread path (swash) rendered as an SVG path we can 'draw' -->
+  <svg id="swash-svg" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="gold-thread" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#E8D9A8"/>
+        <stop offset="50%" stop-color="#D4AF37"/>
+        <stop offset="100%" stop-color="#B58E2F"/>
+      </linearGradient>
+      <filter id="thread-glow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="1.5" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
 
-    <!-- ======================= Header Component ======================= -->
-    <header class="header" id="header">
-        <div class="container">
-            <div class="header__content">
-                <a href="#" class="header__logo">Laad Saab</a>
-                
-                <nav class="nav" id="nav-menu">
-                    <ul class="nav__list">
-                        <li><a href="#home" class="nav__link active">Home</a></li>
-                        <li><a href="products.html" class="nav__link">Kurtas</a></li>
-                        <li><a href="about.html" class="nav__link">About Us</a></li>
-                        <li><a href="contact.html" class="nav__link">Contact</a></li>
-                    </ul>
-                </nav>
-                
-                <div class="header__actions">
-                    <button class="action-btn" id="searchBtn" aria-label="Search">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button class="action-btn" aria-label="Wishlist">
-                        <i class="fas fa-heart"></i>
-                    </button>
+    <!-- Elegant S-curve swash; edit path if you want a different arc -->
+    <path id="swash-path"
+          d="M 60 300 C 260 80, 540 80, 740 300 S 1120 520, 1140 220"
+          stroke="url(#gold-thread)"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          fill="none"
+          filter="url(#thread-glow)"/>
+  </svg>
 
-                    <div class="header__user-actions" id="user-actions">
-                            <button class="btn login-btn" id="login-btn">Login</button>
-                            <div class="user-profile" id="user-profile" style="display: none;">
-                                <img id="user-avatar" src="" alt="User Avatar">
-                            </div>
-                        </div>
-                    <button class="action-btn" id="cart-button" aria-label="Shopping Cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="badge" id="cart-count">0</span>
-                    </button>
-                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open Menu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+  <!-- Monogram: your actual SVG file -->
+  <div id="monogram-wrap" aria-label="Laad Saab crest">
+    <!-- We inline the SVG at runtime via fetch or <img>. Use <img> for simplicity: -->
+    <img src="images/logo-mark.svg" alt="Laad Saab monogram" id="monogram-img">
+  </div>
+</div>
+<!-- ======================= End Couture Thread Loader ======================= -->
 
-       <!-- ======================= Search Palette ======================= -->
-    <div class="search-palette" id="search-palette">
-        <div class="search-palette__content">
-            <div class="search-palette__input-wrapper">
-                <i class="fas fa-search"></i>
-                <input type="text" id="search-input" class="search-input" placeholder="Search for Anarkali, Festive Wear...">
-            </div>
-            <div class="search-results" id="search-results">
-                <!-- Live search results will appear here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- ======================= Mobile Navigation Menu ======================= -->
-    <div class="mobile-nav" id="mobile-nav">
-        <div class="mobile-nav__header">
-            <h3 class="mobile-nav__title">Menu</h3>
-            <button class="close-btn" id="mobile-nav-close" aria-label="Close Menu">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <ul class="mobile-nav__list">
-            <li><a href="#home" class="mobile-nav__link">Home</a></li>
-            <li><a href="products.html" class="mobile-nav__link">Kurtas</a></li>
-            <li><a href="about.html" class="mobile-nav__link">About Us</a></li>
-            <li><a href="contact.html" class="mobile-nav__link">Contact</a></li>
-        </ul>
-    </div>
 
     <main>
         <!-- ======================= Hero Section ======================= -->
         <section class="hero" id="home">
             <div class="hero__background">
-                <img src="https://images.unsplash.com/photo-1583743814966-8936f37f4678?w=1800&h=2400&fit=crop" alt="Model wearing a classic white kurta" class="hero__background-image">
+        <img
+            src="images/1.jpeg"
+            alt="Featured look"
+            class="hero__background-image"
+        />
+        <div class="hero__vignette"></div>
+        </div>
+
+        <div class="container">
+        <div class="hero__content">
+            <div class="reveal-wrap">
+            <h1 class="hero__title">Elegance in Every Thread</h1>
             </div>
-            <div class="container">
-                <div class="hero__content">
-                    <h1 class="hero__title">Elegance in Every Thread</h1>
-                    <p class="hero__subtitle">Discover our exclusive collection of handcrafted kurtas, where timeless tradition meets modern sophistication.</p>
-                    <a href="#kurtas" class="btn hero__cta">Shop The Collection</a>
-                </div>
+            <div class="reveal-wrap">
+            <p class="hero__subtitle">
+                Discover our exclusive collection of handcrafted kurtas, where timeless tradition meets modern sophistication.
+            </p>
             </div>
+            <div class="reveal-wrap">
+            <a href="products.html" class="btn hero__cta">Shop The Collection</a>
+            </div>
+        </div>
+        </div>
+
+
         </section>
 
         <!-- ======================= Featured Products Section ======================= -->
@@ -297,7 +271,7 @@
     
     <!-- Your Firebase Initialization -->
     <script src="firebase-init.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="global.js"></script>
     <script src="app.js"></script>
 </body>
